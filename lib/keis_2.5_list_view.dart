@@ -19,6 +19,30 @@ class User extends StatelessWidget {
   final String name;
   final String number;
 
+  snackBar(BuildContext context, String text) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        action: SnackBarAction(
+          label: 'Скрыть',
+          onPressed: () {
+            // Code to execute.
+          },
+        ),
+        content: Text(text),
+        duration: const Duration(milliseconds: 5000),
+        width: 350,
+        // Width of the SnackBar.
+        padding: const EdgeInsets.symmetric(
+          horizontal: 8.0, // Inner padding for SnackBar content.
+        ),
+        behavior: SnackBarBehavior.floating,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10.0),
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -26,24 +50,29 @@ class User extends StatelessWidget {
       margin: const EdgeInsets.all(8),
       decoration: BoxDecoration(border: Border.all(), color: Colors.teal),
       child: ListTile(
-          title: Text.rich(
-            TextSpan(
-                text: "Имя: ",
-                style: const TextStyle(fontWeight: FontWeight.bold),
-                children: <TextSpan>[
-                  TextSpan(
-                      text: name, style: const TextStyle(color: Colors.white))
-                ]),
-          ),
-          subtitle: Text.rich(
-            TextSpan(
-                text: "Номер: ",
-                style: const TextStyle(fontWeight: FontWeight.bold,color: Colors.black),
-                children: <TextSpan>[
-                  TextSpan(
-                      text: number, style: const TextStyle(color: Colors.white))
-                ]),
-          ),),
+        onTap: () {
+          snackBar(context, "Вызвать $name по номеру $number?");
+        },
+        title: Text.rich(
+          TextSpan(
+              text: "Имя: ",
+              style: const TextStyle(fontWeight: FontWeight.bold),
+              children: <TextSpan>[
+                TextSpan(
+                    text: name, style: const TextStyle(color: Colors.white))
+              ]),
+        ),
+        subtitle: Text.rich(
+          TextSpan(
+              text: "Номер: ",
+              style: const TextStyle(
+                  fontWeight: FontWeight.bold, color: Colors.black),
+              children: <TextSpan>[
+                TextSpan(
+                    text: number, style: const TextStyle(color: Colors.white))
+              ]),
+        ),
+      ),
     );
   }
 }
